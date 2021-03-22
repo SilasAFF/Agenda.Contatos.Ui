@@ -1,0 +1,144 @@
+
+
+<!-- Button trigger modal -->
+
+<!--
+<button type="button" class="btn btn-primary float-left m-2" data-toggle="modal" 
+    data-target="#exampleModal" (click)="addClick()">
+    <mat-icon>add</mat-icon>
+  </button>
+-->
+
+<br><br>
+
+
+  <div style="padding-right: 0em ;margin-right: 30em; margin-left: 25em; border-radius: 15px 15px;">
+  <div id="titulo" style="margin-top: 10px;padding:2em; padding-left: 2.3em;"></div>
+</div>
+  <button mat-raised-button style="color: white;background-color: #18ce0e; float: left; margin-left: 2.3em;"
+  data-toggle="modal" 
+  data-target="#exampleModal"
+  (click)="addClick()"><mat-icon>add</mat-icon> Novo Contato</button>
+
+
+
+
+
+
+  <!--Modal-->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeClick()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <app-add-edit-cli [cli]="cli" *ngIf="ActivateAddEditCliComp"></app-add-edit-cli>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--
+  
+<table class="table table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th>Nome</th>
+            <th>Numero</th>
+            <th>Email</th>
+            <th>Favorito</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let dataItem of ClienteList">
+            <td>{{dataItem.Nome}}</td>
+            <td>{{dataItem.Numero}}</td>
+            <td>{{dataItem.Email}}</td>
+            <td>{{dataItem.Favorito}}</td>
+            <td>
+              
+
+                <button type="button" 
+                        class="btn btn-light mr-1"
+                        data-toggle="modal" 
+                        data-target="#exampleModal" 
+                        (click)="editClick(dataItem)">
+                        <mat-icon>edit</mat-icon> 
+                </button>
+                
+                <button type="button" 
+                        class="btn btn-light mr-1"
+                        (click)="deleteClick(dataItem.Id)"
+                        style="margin-left: 10px;"> 
+                        <mat-icon>delete</mat-icon>
+                </button>
+
+                <button type="button" 
+                        class="btn btn-light mr-1"
+                        style="margin-left: 10px;"> 
+                        <mat-icon>search</mat-icon>
+                </button>
+
+              </td>
+    
+        </tr>
+    </tbody>
+</table>
+
+-->
+
+<br><br>
+<hr style="border:1px solid white;">
+
+
+<div *ngIf="ClienteList.length == 0" style="opacity: 0.5;;background: rgba(255, 255, 255, 0.5);padding: 11em 0 8em; text-align: center; vertical-align: middle;">
+  <h1> Você ainda não possui contatos...</h1>
+  <div id="caratriste"> </div>
+</div>
+
+
+<table class="d-flex flex-wrap mx-auto my-5 justify-content-center contact">
+  <tr *ngFor="let dataItem of ClienteList">
+<div style="padding: 0.5em;">
+  <mat-card class="example-card" style="height: 100%; width: 250px; background-color: #FAFAFA;">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">
+        <span class="material-icons" style="font-size: 50px;">account_circle</span>
+      </div>
+      <mat-card-title>{{dataItem.Nome}}</mat-card-title>
+      <mat-card-subtitle>{{dataItem.Numero}}</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-actions>
+     <button mat-icon-button color="primary" (click)="editClick(dataItem)"
+      data-toggle="modal" data-target="#exampleModal">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button (click)="deleteClick(dataItem.Id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button color="warn">
+        <!--<mat-icon>favorite</mat-icon> favorite_border-->
+        <span class="material-icons" (click)="favoriteCliente(dataItem)">
+           <span *ngIf="!dataItem.Favorito">favorite_border</span>
+           <span *ngIf="dataItem.Favorito">favorite</span>
+          </span>
+      </button>
+      <button mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+</tr>
+</table>
+
+
+
+    
+

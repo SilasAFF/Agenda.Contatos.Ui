@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%;}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+#corpo{
+    background-image: url(../images/fundoNovo.png);
+    background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+ 
+    width: 100%;
+    background-color: white;
+    color: #1a1a1a;
+    text-align: center;
+    padding-top: 1em;
+    border-top: solid 1px #cccccc;
+  }
+
+ 
+  .footer2 {
+    position: fixed;
+    left: 0;
+    top: 0;
+ 
+    width: 100%;
+    background-color: white;
+    color: #1a1a1a;
+    text-align: center;
+    border-top: solid 1px #cccccc;
+  }
