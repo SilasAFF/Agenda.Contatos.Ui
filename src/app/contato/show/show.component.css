@@ -21,14 +21,15 @@ td,th {
   #titulo{
     background-image: url(../../../../images/contactmet.png);
     background-size: 100%;
+    background-repeat: no-repeat;
   }
   
-#caratriste{
+#badEmoticon{
     background-image: url(../../../../images/tristeFace.png);
     background-size: 100% 100%;
-    margin-left: 35em;
-    height: 100px;
-    width: 100px;
+    margin-left: 37em;
+    height: 70px;
+    width: 70px;
 }
 
   

@@ -4,76 +4,85 @@ import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 
 import{SharedService} from 'src/app/shared.service'; 
-import { Cliente } from '../Models/Cliente';
+import { Contato } from '../models/Contato';
 
 @Component({
-  selector: 'app-show-cli',
-  templateUrl: './show-cli.component.html',
-  styleUrls: ['./show-cli.component.css']
+  selector: 'app-show',
+  templateUrl: './show.component.html',
+  styleUrls: ['./show.component.css']
 })
-export class ShowCliComponent implements OnInit {
+export class ShowComponent implements OnInit {
 
   constructor(private fb: FormBuilder,private service:SharedService) { }
 
   favorito:boolean = false;
 
-  ClienteList:any=[];
+  ContatoList:any=[];
+  ct:any[];
   
   ModalTitle:string;
-  ActivateAddEditCliComp:boolean;
+  ActivateAddEditComp:boolean;
   cli:any;
-  cliente: Cliente;
-  clienteForm: FormGroup;
+  contato: Contato;
+  contatoForm: FormGroup;
 
   ngOnInit(): void {
-    this.refreshCliList()
+    this.refreshList()
   }
 
-  refreshCliList(){
+  refreshList(){
     this.service.getCliList().subscribe(data=>{
-      this.ClienteList=data;
+      this.ContatoList=data;
     });
-    if(this.ClienteList.lenght() < 1){
-      
-    }
   }
+
+  
 
   addClick(){
+    
     this.cli={
       Id:0,
       Nome:'',
-      //Idade:0,
-      //Documento:'',
       Numero:'',
       Email:'',
       Favorito: false
     }
-    this.ModalTitle="Add Cliente";
-    this.ActivateAddEditCliComp=true;
+    /*
+    this.contato={
+      id:'0',
+      nome:'',
+      numero:'',
+      email:'',
+      favorito: false
+    }
+    */
+    this.ModalTitle="Novo Contato";
+    this.ActivateAddEditComp=true;
   }
 
   closeClick(){
-    this.ActivateAddEditCliComp=false;
-    this.refreshCliList();
+    this.ActivateAddEditComp=false;
+    this.refreshList();
   }
 
   editClick(item){
     this.cli=item;
-    this.ModalTitle="Edit Cliente";
-    this.ActivateAddEditCliComp=true;
+    //this.contato=item;
+    this.ModalTitle="Editar Contato";
+    this.ActivateAddEditComp=true;
   }
 
   deleteClick(item){
-    if(confirm("Tem Certeza?")){
-      this.service.delCliente(item).subscribe(data=>{
-        this.refreshCliList();
+    if(confirm("Tem certeza que deseja excluir "+item.Nome +" ?")){
+      this.service.delCliente(item.Id).subscribe(data=>{
+        this.refreshList();
       });
     }
   }
 
 
-  favoriteCliente(item){
-    this.clienteForm = this.fb.group({
+  favoriteClick(item){
+    this.contatoForm = this.fb.group({
       id: item.Id,
       nome: item.Nome,
       numero: item.Numero,
@@ -81,18 +90,18 @@ export class ShowCliComponent implements OnInit {
       favorito: !item.Favorito
     });
 
-    let clienteForm = Object.assign({}, this.cliente, this.clienteForm.value);
+    let contatoForm = Object.assign({}, this.contato, this.contatoForm.value);
     
-    this.favoriteClienteHandle(clienteForm)
+    this.favoriteClienteHandle(contatoForm)
         .subscribe(
           result => { this.onSaveComplete(result) },
           fail => { this.onError(fail) }
         );
   }
 
-  favoriteClienteHandle(cliente: Cliente): Observable<Cliente> {
+  favoriteClienteHandle(contato: Contato): Observable<Contato> {
 
-    return this.service.editCliente(cliente);
+    return this.service.editCliente(contato);
   }
 
   onSaveComplete(response: any) {

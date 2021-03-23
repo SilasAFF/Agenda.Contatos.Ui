@@ -1,10 +1,7 @@
-export class Cliente {
+export class Contato {
     id: string;
     nome: string;
-    //idade: number;
-    //documento: string;
     numero: string;
     email: string;
     favorito: boolean;
   }
-  
