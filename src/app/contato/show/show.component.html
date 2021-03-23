@@ -1,4 +1,21 @@
+<nav class="navbar navbar-expand-lg  fixed-top" style="background-color: rgba(0, 0, 0, 0.7);">
+ 
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    
+      
+        <div style="padding-right: 0em ;float: left;margin-right: 30em; margin-left: 8em; border-radius: 15px 15px;">
+            <div id="titulo" style="height: 50px;width: 250px;margin-top: 10px;padding:1em; padding-left: 2.3em;"></div>
+          </div>
 
+          <div mat-card-avatar class="example-header-image" style="float: right; margin-left: 380px;">
+            <span class="material-icons" style="font-size: 50px; color: rgba(255, 255, 255);">account_circle</span>
+          </div>
+         
+  
+  </nav>
 
 <!-- Button trigger modal -->
 
@@ -9,16 +26,15 @@
   </button>
 -->
 
-<br><br>
 
 
-  <div style="padding-right: 0em ;margin-right: 30em; margin-left: 25em; border-radius: 15px 15px;">
-  <div id="titulo" style="margin-top: 10px;padding:2em; padding-left: 2.3em;"></div>
-</div>
-  <button mat-raised-button style="color: white;background-color: #18ce0e; float: left; margin-left: 2.3em;"
-  data-toggle="modal" 
-  data-target="#exampleModal"
-  (click)="addClick()"><mat-icon>add</mat-icon> Novo Contato</button>
+<br><br><br><br>
+
+
+<button mat-raised-button style="color: white;background-color: #18ce0e; float: left;"
+data-toggle="modal" 
+data-target="#exampleModal"
+(click)="addClick()"><mat-icon>add</mat-icon> Novo Contato</button>
 
 
 
@@ -30,13 +46,13 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h5>
+          <h3 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeClick()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          <app-add-edit-cli [cli]="cli" *ngIf="ActivateAddEditCliComp"></app-add-edit-cli>
+          <app-add-edit [cli]="cli" *ngIf="ActivateAddEditComp"></app-add-edit>
         </div>
       </div>
     </div>
@@ -55,7 +71,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let dataItem of ClienteList">
+        <tr *ngFor="let dataItem of ContatoList">
             <td>{{dataItem.Nome}}</td>
             <td>{{dataItem.Numero}}</td>
             <td>{{dataItem.Email}}</td>
@@ -93,25 +109,25 @@
 -->
 
 <br><br>
-<hr style="border:1px solid white;">
+<hr style="border:1px solid rgb(138, 138, 138);">
 
 
-<div *ngIf="ClienteList.length == 0" style="opacity: 0.5;;background: rgba(255, 255, 255, 0.5);padding: 11em 0 8em; text-align: center; vertical-align: middle;">
+<div *ngIf="ContatoList.length == 0" style="opacity: 0.5;;background: rgba(255, 255, 255, 0.8);padding: 11em 0 8em; text-align: center; vertical-align: middle;">
   <h1> Você ainda não possui contatos...</h1>
-  <div id="caratriste"> </div>
+  <div id="badEmoticon"> </div>
 </div>
 
 
 <table class="d-flex flex-wrap mx-auto my-5 justify-content-center contact">
-  <tr *ngFor="let dataItem of ClienteList">
+  <tr *ngFor="let dataItem of ContatoList">
 <div style="padding: 0.5em;">
-  <mat-card class="example-card" style="height: 100%; width: 250px; background-color: #FAFAFA;">
+  <mat-card class="example-card" style="height: 100%; width: 250px; background-color: #ffffff;">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image">
-        <span class="material-icons" style="font-size: 50px;">account_circle</span>
+        <span class="material-icons" style="font-size: 50px; color: black;">account_circle</span>
       </div>
       <mat-card-title>{{dataItem.Nome}}</mat-card-title>
-      <mat-card-subtitle>{{dataItem.Numero}}</mat-card-subtitle>
+      <mat-card-subtitle>{{dataItem.Numero | mask: '(00) 00000-0000'}}</mat-card-subtitle>
     </mat-card-header>
     
     <mat-card-actions>
@@ -119,12 +135,12 @@
       data-toggle="modal" data-target="#exampleModal">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button (click)="deleteClick(dataItem.Id)">
+      <button mat-icon-button (click)="deleteClick(dataItem)">
         <mat-icon>delete</mat-icon>
       </button>
       <button mat-icon-button color="warn">
         <!--<mat-icon>favorite</mat-icon> favorite_border-->
-        <span class="material-icons" (click)="favoriteCliente(dataItem)">
+        <span class="material-icons" (click)="favoriteClick(dataItem)">
            <span *ngIf="!dataItem.Favorito">favorite_border</span>
            <span *ngIf="dataItem.Favorito">favorite</span>
           </span>
@@ -138,7 +154,7 @@
 </tr>
 </table>
 
+<br>
 
 
-    
 

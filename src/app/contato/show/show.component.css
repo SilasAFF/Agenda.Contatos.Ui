@@ -1,0 +1,35 @@
+td,th {
+    text-align: center;     /* alinhamento horizontal */
+    vertical-align: middle; /* alinhamento vertical */
+ }
+
+ table{
+     padding-bottom: 5em;
+ }
+
+
+ header {
+    position:relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-image: url(../../../../images/back.jpg);
+    color: #1a1a1a;
+    border-bottom: solid 1px #cccccc;
+  }
+
+  #titulo{
+    background-image: url(../../../../images/contactmet.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+#badEmoticon{
+    background-image: url(../../../../images/tristeFace.png);
+    background-size: 100% 100%;
+    margin-left: 37em;
+    height: 70px;
+    width: 70px;
+}
+
+  

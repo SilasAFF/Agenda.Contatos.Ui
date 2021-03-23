@@ -1,0 +1,46 @@
+
+
+<div class="row">
+    <div class="col-md-12">
+  <!--<form enctype="multipart/form-data" (ngSubmit)="addCliente()" [formGroup]="clienteForm">-->
+  <form enctype="multipart/form-data"  [formGroup]="contatoForm">
+  
+  
+      <div class="alert alert-danger" *ngIf="errors.length > 0">
+          <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+          <ul>
+            <li *ngFor="let error of errors">{{ error }}</li>
+          </ul>
+        </div>
+  
+      <div class="form-group">
+          <label class="control-label" for="Nome">Nome</label>
+          <input type="text" class="form-control" formControlName="nome" placeholder="Nome" maxlength="15">
+      </div>
+
+      <div class="form-group">
+          <label class="control-label" for="Numero">Numero</label>
+          <input type="text" class="form-control" formControlName="numero" placeholder="(   ) _____-____" mask="(00) 00000-0000">
+      </div>
+      <div class="form-group">
+          <label class="control-label" for="Email">Email</label>
+          <input type="email" class="form-control" formControlName="email" placeholder="Ex. pat@example.com">
+      </div>
+      <div class="form-group">
+          <label class="control-label" for="favorito">Favorito</label>
+              <input type="checkbox"  formControlName="favorito">
+          
+      </div>
+
+
+      <div class="form-group" *ngIf="cli.Id==0" (click)="addCliente()">
+          <input type="submit" value="Cadastrar" class="btn btn-primary">
+      </div>
+      <div class="form-group" *ngIf="cli.Id!=0" (click)="editCliente()">
+          <input type="submit" value="Atualizar" class="btn btn-primary">
+      </div>
+  
+  </form>
+  </div>
+  </div>
+  
