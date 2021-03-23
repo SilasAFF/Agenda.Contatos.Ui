@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { HttpHeaders } from '@angular/common/http';
-import{ Cliente } from './cliente/Models/Cliente'
+import{ Contato } from './contato/models/Contato'
 import { catchError, map } from "rxjs/operators";
 import { throwError } from 'rxjs';
 import { Guid } from 'guid-typescript';
@@ -22,7 +22,7 @@ export class SharedService {
   public ObterHeaderFormData() {
     return {
         headers: new HttpHeaders({
-            'Content-Disposition': 'form-data; name="cliente"'
+            'Content-Disposition': 'form-data; name="contato"'
         })
     };
 }
@@ -79,16 +79,16 @@ public serviceError(response: Response | any) {
   }
 
   
-  addCliente(cliente: Cliente): Observable<Cliente>{
-    return this.http.post(this.APIUrl+'/contatos',cliente, this.ObterHeaderJson())
+  addCliente(contato: Contato): Observable<Contato>{
+    return this.http.post(this.APIUrl+'/contatos',contato, this.ObterHeaderJson())
     .pipe(
       map(this.extractData),
       catchError(this.serviceError)
   );
   }
 
-  editCliente(cliente: Cliente): Observable<Cliente>{
-    return this.http.put(this.APIUrl+'/contatos/'+cliente.id,cliente, this.ObterHeaderJson())
+  editCliente(contato: Contato): Observable<Contato>{
+    return this.http.put(this.APIUrl+'/contatos/'+contato.id,contato, this.ObterHeaderJson())
     .pipe(
       map(this.extractData),
       catchError(this.serviceError)

@@ -10,7 +10,7 @@
             <div id="titulo" style="height: 50px;width: 250px;margin-top: 10px;padding:1em; padding-left: 2.3em;"></div>
           </div>
 
-          <div mat-card-avatar class="example-header-image" style="float: right; margin-left: 380px;">
+          <div mat-card-avatar class="example-header-image" style="float: right; margin-left: 380px; padding-top: 4px;">
             <span class="material-icons" style="font-size: 50px; color: rgba(255, 255, 255);">account_circle</span>
           </div>
          
@@ -31,7 +31,7 @@
 <br><br><br><br>
 
 
-<button mat-raised-button style="color: white;background-color: #18ce0e; float: left;"
+<button mat-raised-button style="color: white;background-color: #0be400; float: left;"
 data-toggle="modal" 
 data-target="#exampleModal"
 (click)="addClick()"><mat-icon>add</mat-icon> Novo Contato</button>
@@ -58,55 +58,7 @@ data-target="#exampleModal"
     </div>
   </div>
 
-<!--
-  
-<table class="table table-hover">
-    <thead class="thead-dark">
-        <tr>
-            <th>Nome</th>
-            <th>Numero</th>
-            <th>Email</th>
-            <th>Favorito</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let dataItem of ContatoList">
-            <td>{{dataItem.Nome}}</td>
-            <td>{{dataItem.Numero}}</td>
-            <td>{{dataItem.Email}}</td>
-            <td>{{dataItem.Favorito}}</td>
-            <td>
-              
 
-                <button type="button" 
-                        class="btn btn-light mr-1"
-                        data-toggle="modal" 
-                        data-target="#exampleModal" 
-                        (click)="editClick(dataItem)">
-                        <mat-icon>edit</mat-icon> 
-                </button>
-                
-                <button type="button" 
-                        class="btn btn-light mr-1"
-                        (click)="deleteClick(dataItem.Id)"
-                        style="margin-left: 10px;"> 
-                        <mat-icon>delete</mat-icon>
-                </button>
-
-                <button type="button" 
-                        class="btn btn-light mr-1"
-                        style="margin-left: 10px;"> 
-                        <mat-icon>search</mat-icon>
-                </button>
-
-              </td>
-    
-        </tr>
-    </tbody>
-</table>
-
--->
 
 <br><br>
 <hr style="border:1px solid rgb(138, 138, 138);">
@@ -129,7 +81,7 @@ data-target="#exampleModal"
       <mat-card-title>{{dataItem.Nome}}</mat-card-title>
       <mat-card-subtitle>{{dataItem.Numero | mask: '(00) 00000-0000'}}</mat-card-subtitle>
     </mat-card-header>
-    
+
     <mat-card-actions>
      <button mat-icon-button color="primary" (click)="editClick(dataItem)"
       data-toggle="modal" data-target="#exampleModal">

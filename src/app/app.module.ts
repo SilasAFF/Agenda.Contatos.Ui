@@ -3,9 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ClienteComponent } from './cliente/cliente.component';
-import { ShowCliComponent } from './cliente/show-cli/show-cli.component';
-import { AddEditCliComponent } from './cliente/add-edit-cli/add-edit-cli.component';
+
 
 import { SharedService } from './shared.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,9 +20,6 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
 @NgModule({
   declarations: [
     AppComponent,
-    ClienteComponent,
-    ShowCliComponent,
-    AddEditCliComponent,
     ContatoComponent,
     AddEditComponent,
     ShowComponent
