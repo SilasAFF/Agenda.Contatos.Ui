@@ -16,13 +16,9 @@ export class ShowComponent implements OnInit {
   constructor(private fb: FormBuilder,private service:SharedService) { }
 
   favorito:boolean = false;
-
   ContatoList:any=[];
-  ct:any[];
-  
   ModalTitle:string;
   ActivateAddEditComp:boolean;
-  cli:any;
   contato: Contato;
   contatoForm: FormGroup;
 
@@ -31,55 +27,43 @@ export class ShowComponent implements OnInit {
   }
 
   refreshList(){
-    this.service.getCliList().subscribe(data=>{
+    this.service.getContatoList().subscribe(data=>{
       this.ContatoList=data;
     });
   }
 
-  
-
   addClick(){
-    
-    this.cli={
-      Id:0,
-      Nome:'',
-      Numero:'',
-      Email:'',
-      Favorito: false
-    }
-    /*
     this.contato={
-      id:'0',
+      id: null,
       nome:'',
       numero:'',
       email:'',
       favorito: false
     }
-    */
+    
     this.ModalTitle="Novo Contato";
     this.ActivateAddEditComp=true;
   }
 
-  closeClick(){
-    this.ActivateAddEditComp=false;
-    this.refreshList();
-  }
-
   editClick(item){
-    this.cli=item;
-    //this.contato=item;
+    this.contato={
+      id: item.Id,
+      nome: item.Nome,
+      numero: item.Numero,
+      email: item.Email,
+      favorito: item.Favorito
+    }
     this.ModalTitle="Editar Contato";
     this.ActivateAddEditComp=true;
   }
 
   deleteClick(item){
     if(confirm("Tem certeza que deseja excluir "+item.Nome +" ?")){
-      this.service.delCliente(item.Id).subscribe(data=>{
+      this.service.delContato(item.Id).subscribe(data=>{
         this.refreshList();
       });
     }
   }
-
 
   favoriteClick(item){
     this.contatoForm = this.fb.group({
@@ -101,24 +85,21 @@ export class ShowComponent implements OnInit {
 
   favoriteClienteHandle(contato: Contato): Observable<Contato> {
 
-    return this.service.editCliente(contato);
+    return this.service.editContato(contato);
   }
 
   onSaveComplete(response: any) {
-    this.load()
+    this.refreshList();
   }
 
   onError(fail: any) {
    //this.errors = fail.error.errors;
    alert("erro");
   }
-
-
-  load() {
-    //Session storage salva os dados como string
-    //(sessionStorage.refresh == 'true' || !sessionStorage.refresh) && 
-    location.reload();
-    //sessionStorage.refresh = false;
+  
+  closeClick(){
+    this.ActivateAddEditComp=false;
+    this.refreshList();
   }
 
 }

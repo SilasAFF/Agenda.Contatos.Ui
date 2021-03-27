@@ -39,23 +39,6 @@ public extractData(response: any) {
   return response.data || {};
 }
 
-
-/*
-public serviceError(error: Response | any) {
-  let errMsg: string;
-
-  if (error instanceof Response) {
-
-      errMsg = `${error.status} - ${error.statusText || ''}`;
-  }
-  else {
-      errMsg = error.message ? error.message : error.toString();
-  }
-
-  console.error(errMsg);
-  return throwError(errMsg);
-}*/
-
 public serviceError(response: Response | any) {
   let customError: string[] = [];
 
@@ -74,12 +57,11 @@ public serviceError(response: Response | any) {
 
 //VERBOS------------------------------------------------------------------------
 
-   getCliList():Observable<any[]>{
+   getContatoList():Observable<Contato[]>{
     return this.http.get<any>(this.APIUrl+'/contatos');
   }
 
-  
-  addCliente(contato: Contato): Observable<Contato>{
+  addContato(contato: Contato): Observable<Contato>{
     return this.http.post(this.APIUrl+'/contatos',contato, this.ObterHeaderJson())
     .pipe(
       map(this.extractData),
@@ -87,7 +69,7 @@ public serviceError(response: Response | any) {
   );
   }
 
-  editCliente(contato: Contato): Observable<Contato>{
+  editContato(contato: Contato): Observable<Contato>{
     return this.http.put(this.APIUrl+'/contatos/'+contato.id,contato, this.ObterHeaderJson())
     .pipe(
       map(this.extractData),
@@ -95,7 +77,7 @@ public serviceError(response: Response | any) {
   );
   }
   
-  delCliente(id: Guid){
+  delContato(id: Guid){
     return this.http.delete(this.APIUrl+'/contatos/'+id);
   }
 

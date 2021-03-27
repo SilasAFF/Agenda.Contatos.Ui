@@ -8,18 +8,8 @@ td,th {
  }
 
 
- header {
-    position:relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background-image: url(../../../../images/back.jpg);
-    color: #1a1a1a;
-    border-bottom: solid 1px #cccccc;
-  }
-
   #titulo{
-    background-image: url(../../../../images/contactmet.png);
+    background-image: url(../../../../images/contactmeNovoNovo.png);
     background-size: 100%;
     background-repeat: no-repeat;
   }
