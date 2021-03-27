@@ -15,16 +15,13 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
 })
 export class AddEditComponent implements OnInit {
 
-  @Input() cli:any;
+  @Input() contato: Contato;
   
   Id:Guid;
   Nome:string;
   Numero:string;
   Email:string;
   Favorito:boolean;
-  contato: Contato;
-
-  
   contatoForm: FormGroup;
   errors: any[] = [];
 
@@ -32,54 +29,48 @@ export class AddEditComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
-
-    if(this.cli.Id == 0){
+    // Para adicionar
+    if(this.contato.id == null){
       this.contatoForm = this.fb.group({
-          
-        nome: this.cli.Nome,//'',
-        //idade: this.cli.Idade,//'',
-        //documento: this.cli.Documento,//'',
-        numero: this.cli.Numero,//'',
-        email: this.cli.Email,//''
-        favorito: this.cli.Favorito
+        id: Guid.create().toString(),
+        nome: this.contato.nome,
+        numero: this.contato.numero,
+        email: this.contato.email,
+        favorito: this.contato.favorito
         
       });
     }
+
+    // Para Atualizar
     else{
       this.contatoForm = this.fb.group({
-        id: this.cli.Id,
-        nome: this.cli.Nome,//'',
-        //idade: this.cli.Idade,//'',
-        //documento: this.cli.Documento,//'',
-        numero: this.cli.Numero,//'',
-        email: this.cli.Email,//''
-        favorito: this.cli.Favorito
+        id: this.contato.id,
+        nome: this.contato.nome,
+        numero: this.contato.numero,
+        email: this.contato.email,
+        favorito: this.contato.favorito
         
       });
     }
-   
-
-
   }
 
-  addCliente(){
+  addContato(){
     let contatoForm = Object.assign({}, this.contato, this.contatoForm.value);
     
-    this.clienteHandle(contatoForm)
+    this.addContatoHandle(contatoForm)
         .subscribe(
           result => { this.onSaveComplete(result) },
           fail => { this.onError(fail) }
         );
   }
 
-  editCliente(){
+  editContato(){
     let contatoForm = Object.assign({}, this.contato, this.contatoForm.value);
     
-    this.editClienteHandle(contatoForm)
+    this.editContatoHandle(contatoForm)
         .subscribe(
           result => { this.onSaveComplete(result) },
-          fail => { this.onError(fail) }
+            fail => { this.onError(fail) }
         );
   }
 
@@ -91,13 +82,14 @@ export class AddEditComponent implements OnInit {
    this.errors = fail.error.errors;
   }
 
-  clienteHandle(contato: Contato): Observable<Contato> {
+  addContatoHandle(contato: Contato): Observable<Contato> {
 
-    return this.service.addCliente(contato);
+    return this.service.addContato(contato);
   }
-  editClienteHandle(contato: Contato): Observable<Contato> {
+  
+  editContatoHandle(contato: Contato): Observable<Contato> {
 
-    return this.service.editCliente(contato);
+    return this.service.editContato(contato);
   }
 
   load() {
