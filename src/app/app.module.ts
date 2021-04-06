@@ -15,14 +15,21 @@ import {MatIconModule} from '@angular/material/icon'
 import { ContatoComponent } from './contato/contato.component';
 import { AddEditComponent } from './contato/add-edit/add-edit.component';
 import { ShowComponent } from './contato/show/show.component';
-import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { DetailComponent } from './contato/detail/detail.component'
+
+import {MatTableModule} from '@angular/material/table';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
     AppComponent,
     ContatoComponent,
     AddEditComponent,
-    ShowComponent
+    ShowComponent,
+    DetailComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +41,11 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
     MatCardModule,
     MatButtonModule,
     MatIconModule,
-    NgxMaskModule.forRoot()
+    NgxMaskModule.forRoot(),
+    MatTableModule,
+    MatMenuModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

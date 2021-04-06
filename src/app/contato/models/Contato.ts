@@ -1,4 +1,5 @@
 import { Guid } from "guid-typescript";
+import { Endereco } from "./Endereco";
 
 export class Contato {
     id: string;
@@ -6,4 +7,5 @@ export class Contato {
     numero: string;
     email: string;
     favorito: boolean;
+    
   }

@@ -1,39 +1,8 @@
 
-<nav class="navbar navbar-expand-lg  fixed-top" 
-      style="background-color: rgba(255, 255, 255); border-bottom: rgb(209, 209, 209) solid 2px;">
- 
-    <button class="navbar-toggler" 
-            type="button" 
-            data-toggle="collapse" 
-            data-target="#navbarSupportedContent" 
-            aria-controls="navbarSupportedContent" a
-            ria-expanded="false" 
-            aria-label="Toggle navigation">
-
-      <span class="navbar-toggler-icon"></span>
-
-    </button>
-
-    <!--Titulo ContactMe-->
-    <div style="padding-right: 0em ;float: left;margin-right: 30em; margin-left: 8em; border-radius: 15px 15px;">
-      <div id="titulo" style="height: 50px;width: 250px;margin-top: 10px;padding:1em; padding-left: 2.3em;"></div>
-    </div>
-    
-    <!--Saudacao Usuario-->
-    <p style="float: right; margin-left: 280px;margin-top: 10px;  font-size: 100%;"> 
-      Usuário, seja bem vindo
-    </p>
-
-      <!--Avatar Conta Usuario-->
-    <div mat-card-avatar class="example-header-image" style="margin-left: 20px;float: right;">
-      <span class="material-icons" style="font-size: 40px; color: rgb(0, 0, 0);">account_circle</span>
-    </div>  
-</nav>
-
 <br><br><br><br>
 
   <!--Novo Contato-->
-<button mat-raised-button style="color: white;background-color: rgb(11, 218, 131); float: left;"
+<button mat-raised-button style="color: white;background-color: rgb(22, 214, 138); float: left;"
         data-toggle="modal" 
         data-target="#exampleModal"
         (click)="addClick()">
@@ -43,7 +12,7 @@
 </button>
 
   <!--Modal-->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 3em;">
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 2em;">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -54,6 +23,7 @@
         </div>
         <div class="modal-body">
           <app-add-edit [contato]="contato" *ngIf="ActivateAddEditComp"></app-add-edit>
+          
         </div>
       </div>
     </div>
@@ -63,17 +33,27 @@
 
 <hr style="background-color:  #ffffff; height: 2px;">
 
+
 <!--Se o usuário não possuir contatos-->
 <div class = "shadow" *ngIf="ContatoList.length == 0" style="opacity: 0.7;;background: rgba(255, 255, 255, 0.8);padding: 11em 0 8em; text-align: center; vertical-align: middle;">
-  <h1> Você ainda não possui contatos...</h1>
+  <h1> Adicione um novo contato</h1>
   <div id="badEmoticon"> </div>
 </div>
 
+
 <!--Contatos do cadastrados-->
-<table class="d-flex flex-wrap mx-auto my-5 justify-content-center contact" style="padding-bottom: 25em;">
+<table class="d-flex flex-wrap mx-auto my-5 justify-content-center contact" style="padding-bottom: 25em;" *ngIf="ActivateDetComp == false">
+
   <tr *ngFor="let dataItem of ContatoList">
     <div style="padding: 0.5em;">
-      <mat-card class="example-card shadow" style="height: 100%; width: 250px; background-color: #ffffff; border-radius: 5px 5px;">
+
+      <!--Loading contatos-->
+      <div *ngIf="isLoad" class="d-flex justify-content-center shadow" style="padding: 1.8em 0 1.8em; width: 250px; background-color: #ffffff; border-radius: 5px 5px;">
+        <mat-spinner></mat-spinner>
+      </div>
+
+      <!--Card contatos-->
+      <mat-card class="example-card shadow" style="height: 100%; width: 250px; background-color: #ffffff; border-radius: 5px 5px;" *ngIf="!isLoad">
         
         <mat-card-header>
           <div mat-card-avatar class="example-header-image">
@@ -86,19 +66,34 @@
         </mat-card-header>
 
         <mat-card-actions style="text-align: center; border-top: rgb(251, 223, 160,0.5) solid 2px;">
+          
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <mat-icon *ngIf="!changeText">email</mat-icon>
+              <span *ngIf="changeText" style="background-color: rgba(22, 214, 138);color: white ;padding: 0.4em; border-radius: 5px 5px; margin-right: 0.8em; font-weight: 500;" (click)="copyMessage(dataItem.Email)">Copiar</span>
+              <span id = "email" (mouseover)="changeText=true" (mouseout)="changeText=false" (click)="copyMessage(dataItem.Email)">{{dataItem.Email}}</span>
+            </button>
+          </mat-menu>
+
           <button mat-icon-button style="color: rgb(127, 189, 243);"(click)="editClick(dataItem)" data-toggle="modal" data-target="#exampleModal">
             <mat-icon>edit</mat-icon>
           </button>
+
           <button mat-icon-button style="color: rgb(83, 83, 83);" (click)="deleteClick(dataItem)">
             <mat-icon>delete</mat-icon>
           </button>
+
           <button mat-icon-button color="warn">
             <span class="material-icons" (click)="favoriteClick(dataItem)">
               <span *ngIf="!dataItem.Favorito" style="color: rgb(156, 156, 156);">favorite_border</span>
               <span *ngIf="dataItem.Favorito">favorite</span>
             </span>
           </button>
-          <button mat-icon-button style="color: rgb(83, 83, 83);">
+
+          <button (click)="detailClick(dataItem)" mat-icon-button style="color: rgb(83, 83, 83);">
             <mat-icon>search</mat-icon>
           </button>
         </mat-card-actions>
@@ -109,4 +104,7 @@
 </table>
 
 
+  
+
+ 
 
