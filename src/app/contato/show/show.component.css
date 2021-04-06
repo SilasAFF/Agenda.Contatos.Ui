@@ -1,6 +1,6 @@
 td,th {
-    text-align: center;     /* alinhamento horizontal */
-    vertical-align: middle; /* alinhamento vertical */
+    text-align: center;
+    vertical-align: middle;
  }
 
  table{
@@ -15,11 +15,20 @@ td,th {
   }
   
 #badEmoticon{
-    background-image: url(../../../../images/tristeFace.png);
+    background-image: url(../../../../images/addContato.png);
     background-size: 100% 100%;
     margin-left: 37em;
     height: 70px;
     width: 70px;
 }
 
+
+:host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {   
+  stroke: #000000;
+}
+
+
+#email:hover {
   
+  font-weight:500;
+}

@@ -7,6 +7,7 @@ import{ Contato } from './contato/models/Contato'
 import { catchError, map } from "rxjs/operators";
 import { throwError } from 'rxjs';
 import { Guid } from 'guid-typescript';
+import { Endereco } from './contato/models/Endereco';
 /*
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,7 @@ public serviceError(response: Response | any) {
 
 
 //VERBOS------------------------------------------------------------------------
+//CONTATO:
 
    getContatoList():Observable<Contato[]>{
     return this.http.get<any>(this.APIUrl+'/contatos');
@@ -79,6 +81,41 @@ public serviceError(response: Response | any) {
   
   delContato(id: Guid){
     return this.http.delete(this.APIUrl+'/contatos/'+id);
+  }
+
+
+  //ENDEREÇO:
+
+  getEnderecoList(contatoId: Guid):Observable<Endereco>{
+    return this.http.get<any>(this.APIUrl+'/enderecos/'+contatoId, this.ObterHeaderJson())
+    .pipe(
+      map(this.extractData),
+      catchError(this.serviceError)
+    );
+  }
+
+  addEndereco(endereco: Endereco): Observable<Endereco>{
+    return this.http.post(this.APIUrl+'/enderecos/'+endereco.contatoId,endereco, this.ObterHeaderJson())
+    .pipe(
+      map(this.extractData),
+      catchError(this.serviceError)
+  );
+  }
+
+  editEndereco(endereco: Endereco): Observable<Endereco>{
+    return this.http.put(this.APIUrl+'/enderecos/'+endereco.id,endereco, this.ObterHeaderJson())
+    .pipe(
+      map(this.extractData),
+      catchError(this.serviceError)
+  );
+  }
+
+  delEndereco(id: Guid){
+    return this.http.delete(this.APIUrl+'/enderecos/'+id, this.ObterHeaderJson())
+    .pipe(
+      map(this.extractData),
+      catchError(this.serviceError)
+  );
   }
 
 }
