@@ -1,5 +1,3 @@
-import { Guid } from "guid-typescript";
-
 export class Endereco {
     id: string;
     contatoId: string;

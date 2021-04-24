@@ -1,18 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-import { HttpHeaders } from '@angular/common/http';
 import{ Contato } from './contato/models/Contato'
 import { catchError, map } from "rxjs/operators";
 import { throwError } from 'rxjs';
 import { Guid } from 'guid-typescript';
 import { Endereco } from './contato/models/Endereco';
-/*
-@Injectable({
-  providedIn: 'root'
-})
-*/
+import { Registrar } from './contato/models/Registrar';
+import { Login } from './contato/models/Login';
+
+
 @Injectable()
 export class SharedService {
 
@@ -31,12 +28,23 @@ export class SharedService {
 public ObterHeaderJson() {
   return {
       headers: new HttpHeaders({
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('auth')
       })
   };
 }
 
 public extractData(response: any) {
+  if(response.userId){
+    localStorage.setItem('userId', response.userId);
+  }
+  if(response.userName){
+    localStorage.setItem('userName', response.userName);
+  }
+  if(response.token){
+    localStorage.setItem('auth', response.token);
+  }
+
   return response.data || {};
 }
 
@@ -56,15 +64,30 @@ public serviceError(response: Response | any) {
 }
 
 
-//VERBOS------------------------------------------------------------------------
-//CONTATO:
+//VERBOS---------------------------------------------------------------------------
+
+//CONTATO: ------------------------------------------------------------------------
 
    getContatoList():Observable<Contato[]>{
-    return this.http.get<any>(this.APIUrl+'/contatos');
+    var auth = localStorage.getItem('auth');
+    var userId = localStorage.getItem('userId');
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth
+   });
+
+    return this.http.get<any>(this.APIUrl+'/contatos/'+userId.toString(), { headers: reqHeader });
   }
 
   addContato(contato: Contato): Observable<Contato>{
-    return this.http.post(this.APIUrl+'/contatos',contato, this.ObterHeaderJson())
+    var auth = localStorage.getItem('auth');
+    var userId = localStorage.getItem('userId');
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth
+   });
+
+    return this.http.post(this.APIUrl+'/contatos/'+userId.toString(), contato, { headers: reqHeader }/*this.ObterHeaderJson()*/)
     .pipe(
       map(this.extractData),
       catchError(this.serviceError)
@@ -72,7 +95,13 @@ public serviceError(response: Response | any) {
   }
 
   editContato(contato: Contato): Observable<Contato>{
-    return this.http.put(this.APIUrl+'/contatos/'+contato.id,contato, this.ObterHeaderJson())
+    var auth = localStorage.getItem('auth');
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth
+   });
+
+    return this.http.put(this.APIUrl+'/contatos/'+contato.userId+'/'+contato.id,contato, { headers: reqHeader }/*this.ObterHeaderJson()*/)
     .pipe(
       map(this.extractData),
       catchError(this.serviceError)
@@ -80,14 +109,26 @@ public serviceError(response: Response | any) {
   }
   
   delContato(id: Guid){
-    return this.http.delete(this.APIUrl+'/contatos/'+id);
+    var auth = localStorage.getItem('auth');
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth
+   });
+
+    return this.http.delete(this.APIUrl+'/contatos/'+id, { headers: reqHeader } );
   }
 
 
-  //ENDEREÇO:
+  //ENDEREÇO: ------------------------------------------------------------------------
 
   getEnderecoList(contatoId: Guid):Observable<Endereco>{
-    return this.http.get<any>(this.APIUrl+'/enderecos/'+contatoId, this.ObterHeaderJson())
+    var auth = localStorage.getItem('auth');
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth
+   });
+
+    return this.http.get<any>(this.APIUrl+'/enderecos/'+contatoId, { headers: reqHeader }/*this.ObterHeaderJson()*/)
     .pipe(
       map(this.extractData),
       catchError(this.serviceError)
@@ -95,7 +136,13 @@ public serviceError(response: Response | any) {
   }
 
   addEndereco(endereco: Endereco): Observable<Endereco>{
-    return this.http.post(this.APIUrl+'/enderecos/'+endereco.contatoId,endereco, this.ObterHeaderJson())
+    var auth = localStorage.getItem('auth');
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth
+   });
+
+    return this.http.post(this.APIUrl+'/enderecos/'+endereco.contatoId,endereco, { headers: reqHeader }/*this.ObterHeaderJson()*/)
     .pipe(
       map(this.extractData),
       catchError(this.serviceError)
@@ -103,7 +150,13 @@ public serviceError(response: Response | any) {
   }
 
   editEndereco(endereco: Endereco): Observable<Endereco>{
-    return this.http.put(this.APIUrl+'/enderecos/'+endereco.id,endereco, this.ObterHeaderJson())
+    var auth = localStorage.getItem('auth');
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth
+   });
+
+    return this.http.put(this.APIUrl+'/enderecos/'+endereco.id,endereco, { headers: reqHeader }/*this.ObterHeaderJson()*/)
     .pipe(
       map(this.extractData),
       catchError(this.serviceError)
@@ -111,7 +164,34 @@ public serviceError(response: Response | any) {
   }
 
   delEndereco(id: Guid){
-    return this.http.delete(this.APIUrl+'/enderecos/'+id, this.ObterHeaderJson())
+    var auth = localStorage.getItem('auth');
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth
+   });
+
+    return this.http.delete(this.APIUrl+'/enderecos/'+id, { headers: reqHeader }/*this.ObterHeaderJson()*/)
+    .pipe(
+      map(this.extractData),
+      catchError(this.serviceError)
+  );
+  }
+
+
+  //REGISTRAR: ------------------------------------------------------------------------
+
+  addUser(registrar: Registrar): Observable<Registrar>{
+    return this.http.post(this.APIUrl+'/nova-conta',registrar, this.ObterHeaderJson())
+    .pipe(
+      map(this.extractData),
+      catchError(this.serviceError)
+  );
+  }
+
+  //LOGAR: ------------------------------------------------------------------------
+
+  loginUser(login: Login): Observable<Login>{
+    return this.http.post(this.APIUrl+'/entrar',login, this.ObterHeaderJson())
     .pipe(
       map(this.extractData),
       catchError(this.serviceError)

@@ -1,0 +1,30 @@
+
+<div id="rowLogin" class="row justify-content-md-center">
+    <div id="colLogin" class="col-md-4">
+        <h2>Login</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <div class="alert alert-danger" *ngIf="errors.length > 0">
+            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+            <ul>
+                <li *ngFor="let error of errors">{{ error }}</li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" formControlName="email" class="form-control" placeholder="Ex. pat@example.com"/>
+        </div>
+        <div class="form-group">
+            <label for="password">Senha</label>
+            <input type="password" formControlName="password" class="form-control" placeholder="Senha"/>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">
+                Login
+            </button>
+            <a routerLink="/home" class="btn btn-link">Cancel</a>
+        </div>
+        </form>
+    </div>
+</div>

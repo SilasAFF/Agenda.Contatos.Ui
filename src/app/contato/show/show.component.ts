@@ -10,7 +10,7 @@ import { Endereco } from '../models/Endereco';
 import {Router} from '@angular/router';
 
 import { HttpClient } from '@angular/common/http';
-
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 
 
@@ -21,9 +21,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ShowComponent implements OnInit {
 
-  changeText: boolean;
+  
 
-  constructor(private fb: FormBuilder,private service:SharedService, private router: Router,private http: HttpClient) { 
+  constructor(private fb: FormBuilder,private service:SharedService, private router: Router,private http: HttpClient,private snackBar: MatSnackBar) { 
     this.changeText = false;
   }
 
@@ -35,12 +35,11 @@ export class ShowComponent implements OnInit {
   contato: Contato;
   contatoForm: FormGroup;
   endereco: any;
-
   isLoad: boolean = true;
   dt: any;
-    dataDisplay: any;
-
-    emailCopy:any;
+  dataDisplay: any;
+  emailCopy:any;
+  changeText: boolean;
 
   ngOnInit(): void {
     this.http.get(
@@ -81,7 +80,8 @@ export class ShowComponent implements OnInit {
       nome:'',
       numero:'',
       email:'',
-      favorito: false
+      favorito: false,
+      userId: null
       /*
       endereco:{
           id: null, 
@@ -107,7 +107,8 @@ export class ShowComponent implements OnInit {
       nome: item.Nome,
       numero: item.Numero,
       email: item.Email,
-      favorito: item.Favorito
+      favorito: item.Favorito,
+      userId: item.UserId
     /*
       endereco:{
         id: item.Id,
@@ -140,7 +141,8 @@ export class ShowComponent implements OnInit {
       nome: item.Nome,
       numero: item.Numero,
       email: item.Email,
-      favorito: !item.Favorito
+      favorito: !item.Favorito,
+      userId: item.UserId
     });
 
     let contatoForm = Object.assign({}, this.contato, this.contatoForm.value);
@@ -212,6 +214,13 @@ export class ShowComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+
+    // Abrindo popup snackBar
+    let config = new MatSnackBarConfig();
+    config.duration = 2000;
+    config.horizontalPosition='center';
+    config.panelClass = ['copy-email-snackbar'];
+    this.snackBar.open("Email Copiado", val, config);
   }
 
 

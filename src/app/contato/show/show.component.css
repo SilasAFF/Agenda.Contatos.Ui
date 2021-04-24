@@ -1,34 +1,125 @@
-td,th {
-    text-align: center;
-    vertical-align: middle;
- }
-
- table{
-     padding-bottom: 5em;
- }
-
-
-  #titulo{
-    background-image: url(../../../../images/contactmeNovoNovo.png);
-    background-size: 100%;
-    background-repeat: no-repeat;
-  }
-  
-#badEmoticon{
-    background-image: url(../../../../images/addContato.png);
-    background-size: 100% 100%;
-    margin-left: 37em;
-    height: 70px;
-    width: 70px;
+#btnNovoContato{
+  color: white;
+  background-color: rgb(22, 214, 138); 
+  float: left;
 }
 
+hr{
+  background-color:  #ffffff; 
+  height: 2px;
+}
+
+#semContatos{
+  opacity: 0.7;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 11em 0 8em; 
+  text-align: center; 
+  vertical-align: middle;
+  margin-bottom: 3em;
+}
+
+#imgAddContato{
+  background-image: url(../../../../images/addContato.png);
+  background-size: 100% 100%;
+  margin-left: 37em;
+  height: 70px;
+  width: 70px;
+}
+
+table{
+  margin-bottom: 16em !important;
+}
+
+table > tr > #containerCardContatos{
+  padding: 0.5em;
+}
+
+table > tr > #containerCardContatos > #loadCardContatos{
+  padding: 1.8em 0 1.8em; 
+  width: 250px; 
+  background-color: #ffffff; 
+  border-radius: 5px 5px;
+}
 
 :host ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {   
   stroke: #000000;
 }
 
+table > tr > #containerCardContatos > mat-card{
+  height: 100%; 
+  width: 250px; 
+  background-color: #ffffff; 
+  border-radius: 5px 5px;
+}
+
+#avatarContato{
+  font-size: 50px;
+  color: rgb(63, 63, 63);
+}
+
+#nomeContato{
+  word-wrap: break-word; 
+  margin-top: 0.4em; 
+  width: 160px; 
+  font-family:Arial, Helvetica, sans-serif; 
+  font-size: 18px; 
+  font-weight: 500;
+}
+
+#numeroContato{
+  margin-bottom: 0.4em; 
+  font-family:Arial, Helvetica, sans-serif;
+}
+
+table > tr > #containerCardContatos > mat-card > mat-card-actions{
+  text-align: center; 
+  border-top: rgb(251, 223, 160,0.5) solid 2px;
+}
 
 #email:hover {
-  
   font-weight:500;
 }
+
+::ng-deep .email-tooltip {
+  background-color: rgb(0, 0, 0, 0.5);
+ font-size: 15px;
+}
+
+::ng-deep snack-bar-container.copy-email-snackbar{
+  padding: 20px;
+  background-color: rgb(22, 214, 138);
+  color: rgb(255, 255, 255);
+  font-weight:500;
+  text-shadow: 1px 1px 10px rgb(11, 100, 65);
+}
+
+::ng-deep .mat-simple-snackbar{
+  font-size: 1.1em;
+}
+
+::ng-deep .mat-simple-snackbar-action > button{ 
+  color: rgb(255, 255, 255);
+  font-weight:500;
+  text-shadow: 1px 1px 10px rgb(11, 100, 65);
+  font-size: 1.1em;
+}
+
+#btnEdit{
+  color: rgb(127, 189, 243);
+}
+
+#btnDelete{
+  color: rgb(83, 83, 83);
+}
+
+#btnFavoriteFalse{
+  color: rgb(156, 156, 156);
+}
+
+#btnEndereco{
+  color:  rgb(22, 214, 138, 0.8);
+}
+
+
+
+
