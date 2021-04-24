@@ -1,10 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-
 import { SharedService } from './shared.service';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,11 +14,15 @@ import { AddEditComponent } from './contato/add-edit/add-edit.component';
 import { ShowComponent } from './contato/show/show.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { DetailComponent } from './contato/detail/detail.component'
-
 import {MatTableModule} from '@angular/material/table';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { HomeComponent } from './home/home.component';
+import { RegistrarComponent } from './home/registrar/registrar.component';
+import { LoginComponent } from './home/login/login.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,10 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     ContatoComponent,
     AddEditComponent,
     ShowComponent,
-    DetailComponent
+    DetailComponent,
+    HomeComponent,
+    RegistrarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,9 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     MatTableModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

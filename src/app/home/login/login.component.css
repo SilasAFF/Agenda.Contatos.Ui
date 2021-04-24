@@ -1,0 +1,11 @@
+
+#rowLogin{
+    margin-top: 10em;
+    margin-bottom: 8em;
+}
+
+#colLogin{
+    background-color: rgb(255, 255, 255); 
+    padding: 2em 1em 2em; 
+    border-radius: 10px 10px;
+}

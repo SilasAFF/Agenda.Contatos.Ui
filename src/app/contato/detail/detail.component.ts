@@ -6,8 +6,6 @@ import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 import { SharedService } from 'src/app/shared.service';
 import { Endereco } from '../models/Endereco';
-
-import {MatTableModule} from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 
@@ -38,9 +36,7 @@ export class DetailComponent implements OnInit {
   enderecoMap;
   enderecoCompleto;
   ModalTitle:string;
-
   displayedColumns: string[] = ['logradouro', 'numero', 'complemento', 'cep','bairro','cidade','estado','acao'];
-
   dataSource : any[] = [];
   isLoad: boolean = true;
   dt: any;
@@ -53,6 +49,10 @@ export class DetailComponent implements OnInit {
 
   ngOnInit(): void {
 
+    if(localStorage.getItem('userName') == "null" || localStorage.getItem('userName') == null ){
+      this.router.navigate(['/home']);
+    }
+    
       //Loading
       this.http.get(
         'http://www.mocky.io/v2/5ec6a61b3200005e00d75058')
@@ -130,14 +130,14 @@ export class DetailComponent implements OnInit {
       this.enderecoMap = this.sanitizer.bypassSecurityTrustResourceUrl("https://www.google.com/maps/embed/v1/place?q="+this.enderecoCompleto+"&key=AIzaSyDfRHp_ym142NovJnM57gHdZ0U8yNssYyE");
   }
 
-  //adicionando novo contato
+  //adicionando novo endereco
   addClick(){
       this.ModalTitle="Cadastrar Endereço";
       this.ActivateModalForm = true;
       
   }
 
-  //adicionando novo contato
+  //adicionando novo endereco
   addEndereco(){
 
       let enderecoForm = Object.assign({}, this.endereco, this.enderecoForm.value);
@@ -150,19 +150,19 @@ export class DetailComponent implements OnInit {
           
   }
 
-  //adicionando novo contato
+  //adicionando novo endereco
   addEnderecoHandle(endereco: Endereco): Observable<Endereco> {
 
       return this.service.addEndereco(endereco);
   }
 
-  //atualizando contato
+  //atualizando endereco
   editClick(){
       this.ModalTitle="Atualizar Endereço";
       this.ActivateModalForm = true;
   }
 
-  //atualizando contato
+  //atualizando endereco
   editEndereco(){
       let enderecoForm = Object.assign({}, this.endereco, this.enderecoForm.value);
       
@@ -173,13 +173,13 @@ export class DetailComponent implements OnInit {
           );
   }
 
-  //atualizando contato
+  //atualizando endereco
   editEnderecoHandle(endereco: Endereco): Observable<Endereco> {
 
       return this.service.editEndereco(endereco);
   }
 
-  //deletando contato
+  //deletando endereco
   deleteClick(){
 
       let enderecoForm = Object.assign({}, this.endereco, this.enderecoForm.value);
@@ -193,7 +193,7 @@ export class DetailComponent implements OnInit {
       }
   }
 
-  //deletando contato
+  //deletando endereco
   delEnderecoHandle(id: Guid): Observable<Endereco> {
 
       return this.service.delEndereco(id);
@@ -263,6 +263,9 @@ export class DetailComponent implements OnInit {
       //sessionStorage.refresh = false;
   }
 
+  homeClick(){
+    this.router.navigate(['/contatos']);
+  }
 
 
 }

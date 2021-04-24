@@ -1,12 +1,10 @@
 import { Component, OnInit, Input  } from '@angular/core';
 import { Guid } from "guid-typescript";
-
 import{SharedService} from 'src/app/shared.service';
 import { Contato } from '../models/Contato';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 @Component({
   selector: 'app-add-edit',
@@ -22,6 +20,7 @@ export class AddEditComponent implements OnInit {
   Numero:string;
   Email:string;
   Favorito:boolean;
+  UserId:String = localStorage.getItem('user');
   contatoForm: FormGroup;
   errors: any[] = [];
 
@@ -36,8 +35,8 @@ export class AddEditComponent implements OnInit {
         nome: this.contato.nome,
         numero: this.contato.numero,
         email: this.contato.email,
-        favorito: this.contato.favorito
-        
+        favorito: this.contato.favorito,
+        userId: this.UserId
       });
     }
 
@@ -48,8 +47,8 @@ export class AddEditComponent implements OnInit {
         nome: this.contato.nome,
         numero: this.contato.numero,
         email: this.contato.email,
-        favorito: this.contato.favorito
-        
+        favorito: this.contato.favorito,
+        userId: this.contato.userId
       });
     }
   }
@@ -76,10 +75,17 @@ export class AddEditComponent implements OnInit {
 
   onSaveComplete(response: any) {
     this.load()
+    //this.router.navigate(['contatos']);
   }
 
   onError(fail: any) {
-   this.errors = fail.error.errors;
+    if(fail.status == 401){
+      this.errors = ["Usuário não autorizado!","Realize o login ou cadastre-se."];
+    }
+    else{
+      this.errors = fail.error.errors;
+    }
+   
   }
 
   addContatoHandle(contato: Contato): Observable<Contato> {

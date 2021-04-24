@@ -1,8 +1,7 @@
-
 <br><br><br><br>
 
   <!--Novo Contato-->
-<button mat-raised-button style="color: white;background-color: rgb(22, 214, 138); float: left;"
+<button mat-raised-button id="btnNovoContato"
         data-toggle="modal" 
         data-target="#exampleModal"
         (click)="addClick()">
@@ -23,7 +22,6 @@
         </div>
         <div class="modal-body">
           <app-add-edit [contato]="contato" *ngIf="ActivateAddEditComp"></app-add-edit>
-          
         </div>
       </div>
     </div>
@@ -31,70 +29,69 @@
 
 <br><br>
 
-<hr style="background-color:  #ffffff; height: 2px;">
-
+<!--Linha separacao-->
+<hr>
 
 <!--Se o usuário não possuir contatos-->
-<div class = "shadow" *ngIf="ContatoList.length == 0" style="opacity: 0.7;;background: rgba(255, 255, 255, 0.8);padding: 11em 0 8em; text-align: center; vertical-align: middle;">
+<div id="semContatos" class = "shadow" *ngIf="ContatoList.length == 0">
   <h1> Adicione um novo contato</h1>
-  <div id="badEmoticon"> </div>
+  <div id="imgAddContato"> </div>
 </div>
 
 
-<!--Contatos do cadastrados-->
-<table class="d-flex flex-wrap mx-auto my-5 justify-content-center contact" style="padding-bottom: 25em;" *ngIf="ActivateDetComp == false">
+<!--Contatos cadastrados-->
+<table class="d-flex flex-wrap mx-auto my-5 justify-content-center contact" *ngIf="ContatoList.length > 0">
 
   <tr *ngFor="let dataItem of ContatoList">
-    <div style="padding: 0.5em;">
+    <div id="containerCardContatos">
 
       <!--Loading contatos-->
-      <div *ngIf="isLoad" class="d-flex justify-content-center shadow" style="padding: 1.8em 0 1.8em; width: 250px; background-color: #ffffff; border-radius: 5px 5px;">
+      <div id="loadCardContatos" class="d-flex justify-content-center shadow" *ngIf="isLoad">
         <mat-spinner></mat-spinner>
       </div>
 
       <!--Card contatos-->
-      <mat-card class="example-card shadow" style="height: 100%; width: 250px; background-color: #ffffff; border-radius: 5px 5px;" *ngIf="!isLoad">
+      <mat-card class="example-card shadow" *ngIf="!isLoad">
         
         <mat-card-header>
           <div mat-card-avatar class="example-header-image">
-            <span class="material-icons" style="font-size: 50px;color: rgb(0, 0, 0);">account_circle</span>
+            <span id="avatarContato" class="material-icons">account_circle</span>
           </div>
-          <mat-card-title style="word-wrap: break-word; margin-top: 0.4em; width: 160px; font-family:Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 500;">{{dataItem.Nome}}</mat-card-title>
+          <mat-card-title id="nomeContato">{{dataItem.Nome}}</mat-card-title>
           <!-- Insere um espaço "-" entre o Nome e Numero para alinhamento do Numero-->
           <mat-card-subtitle *ngIf="dataItem.Nome.length < 18" style="margin: 0;"> <span style="color:white;"> - </span> </mat-card-subtitle>
-          <mat-card-subtitle style="margin-bottom: 0.4em; font-family:Arial, Helvetica, sans-serif;">{{dataItem.Numero | mask: '(00) 00000-0000'}}</mat-card-subtitle>
+          <mat-card-subtitle id="numeroContato">{{dataItem.Numero | mask: '(00) 00000-0000'}}</mat-card-subtitle>
         </mat-card-header>
 
-        <mat-card-actions style="text-align: center; border-top: rgb(251, 223, 160,0.5) solid 2px;">
-          
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-card-actions>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item>
               <mat-icon *ngIf="!changeText">email</mat-icon>
-              <span *ngIf="changeText" style="background-color: rgba(22, 214, 138);color: white ;padding: 0.4em; border-radius: 5px 5px; margin-right: 0.8em; font-weight: 500;" (click)="copyMessage(dataItem.Email)">Copiar</span>
-              <span id = "email" (mouseover)="changeText=true" (mouseout)="changeText=false" (click)="copyMessage(dataItem.Email)">{{dataItem.Email}}</span>
+              <mat-icon *ngIf="changeText" >file_copy</mat-icon>
+              <span id="email" (click)="copyMessage(dataItem.Email)" (mouseover)="changeText=true" (mouseout)="changeText=false" matTooltip="Copiar email" matTooltipClass="email-tooltip">{{dataItem.Email}}</span>
             </button>
           </mat-menu>
 
-          <button mat-icon-button style="color: rgb(127, 189, 243);"(click)="editClick(dataItem)" data-toggle="modal" data-target="#exampleModal">
+          <button mat-icon-button id="btnEdit" (click)="editClick(dataItem)" data-toggle="modal" data-target="#exampleModal" matTooltip="Editar" matTooltipClass="email-tooltip">
             <mat-icon>edit</mat-icon>
           </button>
 
-          <button mat-icon-button style="color: rgb(83, 83, 83);" (click)="deleteClick(dataItem)">
+          <button mat-icon-button id="btnDelete" (click)="deleteClick(dataItem)" matTooltip="Excluir" matTooltipClass="email-tooltip">
             <mat-icon>delete</mat-icon>
           </button>
 
-          <button mat-icon-button color="warn">
+          <button mat-icon-button color="warn" matTooltip="Favoritar" matTooltipClass="email-tooltip">
             <span class="material-icons" (click)="favoriteClick(dataItem)">
-              <span *ngIf="!dataItem.Favorito" style="color: rgb(156, 156, 156);">favorite_border</span>
+              <span *ngIf="!dataItem.Favorito" id="btnFavoriteFalse">favorite_border</span>
               <span *ngIf="dataItem.Favorito">favorite</span>
             </span>
           </button>
 
-          <button (click)="detailClick(dataItem)" mat-icon-button style="color: rgb(83, 83, 83);">
-            <mat-icon>search</mat-icon>
+          <button mat-icon-button id="btnEndereco" (click)="detailClick(dataItem)" matTooltip="Ver Endereço" matTooltipClass="email-tooltip">
+            <span class="material-icons">fmd_good</span>
           </button>
         </mat-card-actions>
 
@@ -102,6 +99,8 @@
     </div>
   </tr>
 </table>
+
+
 
 
   
