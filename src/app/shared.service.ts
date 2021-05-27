@@ -8,6 +8,7 @@ import { Guid } from 'guid-typescript';
 import { Endereco } from './contato/models/Endereco';
 import { Registrar } from './contato/models/Registrar';
 import { Login } from './contato/models/Login';
+import { Agenda } from './contato/models/Agenda';
 
 
 @Injectable()
@@ -177,6 +178,60 @@ public serviceError(response: Response | any) {
   );
   }
 
+    //AGENDA: ------------------------------------------------------------------------
+
+    getAgendaList():Observable<Agenda[]>{
+      var auth = localStorage.getItem('auth');
+      var userId = localStorage.getItem('userId');
+      var reqHeader = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth
+     });
+  
+      return this.http.get<any>(this.APIUrl+'/agenda/'+userId.toString(), { headers: reqHeader });
+    }
+
+    addAgenda(agenda: Agenda): Observable<Agenda>{
+      var auth = localStorage.getItem('auth');
+      var userId = localStorage.getItem('userId');
+      agenda.userId = userId;
+      var reqHeader = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth
+     });
+  
+      return this.http.post(this.APIUrl+'/agenda'/*+agenda.contatoId+'/'+userId.toString()*/,agenda, { headers: reqHeader }/*this.ObterHeaderJson()*/)
+      .pipe(
+        map(this.extractData),
+        catchError(this.serviceError)
+    );
+    }
+
+    editAgenda(agenda: Agenda): Observable<Agenda>{
+      var auth = localStorage.getItem('auth');
+      var userId = localStorage.getItem('userId');
+      agenda.userId = userId;
+      var reqHeader = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth
+     });
+  
+      return this.http.put(this.APIUrl+'/agenda/'+agenda.id,agenda, { headers: reqHeader }/*this.ObterHeaderJson()*/)
+      .pipe(
+        map(this.extractData),
+        catchError(this.serviceError)
+    );
+    }
+
+    delAgenda(id: Guid){
+      var auth = localStorage.getItem('auth');
+      var reqHeader = new HttpHeaders({ 
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + auth
+     });
+  
+      return this.http.delete(this.APIUrl+'/agenda/'+id, { headers: reqHeader }/*this.ObterHeaderJson()*/);
+    }
 
   //REGISTRAR: ------------------------------------------------------------------------
 

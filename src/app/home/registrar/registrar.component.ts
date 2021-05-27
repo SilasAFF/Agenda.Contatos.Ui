@@ -23,7 +23,12 @@ export class RegistrarComponent implements OnInit {
   errors: any[] = [];
   submitted = false;
 
-  constructor(private fb: FormBuilder,private router: Router,private service:SharedService,private snackBar: MatSnackBar) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private service:SharedService,
+    private snackBar: MatSnackBar
+    ) { }
 
   ngOnInit(): void {
     //Se usuário logado redireciona para tela de Contatos

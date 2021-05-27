@@ -1,18 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Guid } from 'guid-typescript';
 import { Observable } from 'rxjs';
 
 import{SharedService} from 'src/app/shared.service'; 
 import { Contato } from '../models/Contato';
-import { Endereco } from '../models/Endereco';
-
 import {Router} from '@angular/router';
-
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-
-
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-show',
@@ -20,10 +16,15 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
   styleUrls: ['./show.component.css']
 })
 export class ShowComponent implements OnInit {
-
   
 
-  constructor(private fb: FormBuilder,private service:SharedService, private router: Router,private http: HttpClient,private snackBar: MatSnackBar) { 
+  constructor(
+    private fb: FormBuilder,
+    private service:SharedService, 
+    private router: Router,
+    private http: HttpClient,
+    private snackBar: MatSnackBar
+    ) { 
     this.changeText = false;
   }
 
@@ -81,7 +82,8 @@ export class ShowComponent implements OnInit {
       numero:'',
       email:'',
       favorito: false,
-      userId: null
+      userId: null,
+      pendenciaFinanceira: false
       /*
       endereco:{
           id: null, 
@@ -108,7 +110,8 @@ export class ShowComponent implements OnInit {
       numero: item.Numero,
       email: item.Email,
       favorito: item.Favorito,
-      userId: item.UserId
+      userId: item.UserId,
+      pendenciaFinanceira: item.PendenciaFinanceira
     /*
       endereco:{
         id: item.Id,
@@ -128,11 +131,44 @@ export class ShowComponent implements OnInit {
   }
 
   deleteClick(item){
-    if(confirm("Tem certeza que deseja excluir "+item.Nome +" ?")){
-      this.service.delContato(item.Id).subscribe(data=>{
-        this.refreshList();
-      });
-    }
+
+    Swal.fire({
+      title:'<span style="font-weight:bold">'+"Tem certeza?"+'</span>',
+      html: 'Você realmente quer excluir '+item.Nome+'?',
+      icon: 'warning',
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonText:'Sim',
+      cancelButtonText: 'Não'
+    }).then((result) => {
+        if (result.value) {
+
+            this.service.delContato(item.Id).subscribe(data=>{
+              this.refreshList();
+            });
+            Swal.fire(
+              'Contato Excluido',
+              'Contato excluido com sucesso',
+              'success'
+            )
+
+        }
+        else if (result.dismiss === Swal.DismissReason.cancel) {
+
+            Swal.fire(
+              'Cancelado',
+              'Exclusão cancelada',
+              'info'
+            )
+
+        }
+      })
+
+    //if(confirm("Tem certeza que deseja excluir "+item.Nome +" ?")){
+      // this.service.delContato(item.Id).subscribe(data=>{
+      //   this.refreshList();
+      // });
+    //}
   }
 
   favoriteClick(item){
@@ -223,6 +259,8 @@ export class ShowComponent implements OnInit {
     this.snackBar.open("Email Copiado", val, config);
   }
 
-
+  addAgendaClick(){
+    this.router.navigate(['agenda']);
+  }
 
 }

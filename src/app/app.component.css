@@ -15,24 +15,25 @@ header.fixed {
 
   #tituloImg{
     background-image: url(../../images/contactmeNovoNovo.png);
-    background-size: 100%;
+    background-size: cover;
     background-repeat: no-repeat;
     height: 50px;
     width: 250px;
     margin-top: 10px;
-    padding:1em; 
-    padding-left: 2.3em;
+    /* padding:1em;  */
+    /* padding-left: 2.3em; */
+    padding: 0em 20em;
 
     padding-right: 0em ;
     float: left;
     margin-right: 30em; 
-    margin-left: 7em; 
+    margin-left: 5em; 
     border-radius: 15px 15px;
   }
   
 #logarRegistrarUsuario{
   float: right; 
-  margin-left: 280px; 
+  margin-left: 20em; 
   margin-top: 10px;
 }
 
@@ -49,7 +50,7 @@ header.fixed {
 
 #saudacaoUsuario{
   float: right; 
-  margin-left: 200px; 
+  margin-left: 15em; 
   margin-top: 10px;
 }
 

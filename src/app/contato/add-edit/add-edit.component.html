@@ -11,6 +11,16 @@
                     <li *ngFor="let error of errors">{{ error }}</li>
                 </ul>
             </div>
+
+            <div class="alert alert-success" *ngIf="contatoCadastrado">
+                <h3 id="msgCadastrandoContato">Cadastrando Contato</h3>
+                <mat-progress-bar mode="determinate" value={{progress}}></mat-progress-bar>
+            </div>
+
+            <div class="alert alert-success" *ngIf="contatoAtualizado == true">
+                <h3 id="msgAtualizandoContato">Atualizando Contato</h3>
+                <mat-progress-bar mode="determinate" value={{progress}}></mat-progress-bar>
+            </div>
   
             <div class="form-group">
                 <label class="control-label" for="Nome">Nome</label>
@@ -32,13 +42,22 @@
                     <input type="checkbox"  formControlName="favorito">
             </div>
 
-            <div class="form-group" *ngIf="contato.id==null" (click)="addContato()">
-                <input type="submit" value="Cadastrar" class="btn btn-primary">
+            <div class="form-group">
+                <label class="control-label" for="pendenciaFinanceira">Possui pendência financeira</label>
+                    <input type="checkbox"  formControlName="pendenciaFinanceira">
             </div>
 
-            <div class="form-group" *ngIf="contato.id!=null" (click)="editContato()">
-                <input type="submit" value="Atualizar" class="btn btn-primary">
+            <div class="modal-footer justify-content-center">
+                <div class="form-group" *ngIf="contato.id==null" (click)="addContato()">
+                    <input type="submit" value="Cadastrar" class="btn btn-primary" [disabled]="progressBarAtiva">
+                    <!--<button type="button" class="btn btn-primary btn-block">Cadastrar Contato</button>-->
+                </div>
+    
+                <div class="form-group" *ngIf="contato.id!=null" (click)="editContato()">
+                    <input type="submit" value="Atualizar" class="btn btn-primary" [disabled]="progressBarAtiva">
+                </div>
             </div>
+            
   
         </form>
     </div>

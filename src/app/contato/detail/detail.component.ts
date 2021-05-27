@@ -41,6 +41,7 @@ export class DetailComponent implements OnInit {
   isLoad: boolean = true;
   dt: any;
   dataDisplay: any;
+  naoSeiCep: boolean = false;
 
   constructor(private fb: FormBuilder,private router: Router,private route: ActivatedRoute,private service:SharedService,private sanitizer: DomSanitizer,private http: HttpClient,private el: ElementRef) { 
 
@@ -267,5 +268,15 @@ export class DetailComponent implements OnInit {
     this.router.navigate(['/contatos']);
   }
 
+  checkNaoSeiCep(){
+    if(this.naoSeiCep == false){
+      this.enderecoForm.controls['cep'].disable();
+      this.naoSeiCep = true;
+    }
+    else{
+      this.enderecoForm.controls['cep'].enable();
+      this.naoSeiCep = false;
+    }
+  }
 
 }

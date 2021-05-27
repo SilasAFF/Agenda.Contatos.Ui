@@ -3,6 +3,9 @@
   background-color: rgb(22, 214, 138); 
   float: left;
 }
+#btnAgendaEventos{
+  margin-left: 10px;
+}
 
 hr{
   background-color:  #ffffff; 

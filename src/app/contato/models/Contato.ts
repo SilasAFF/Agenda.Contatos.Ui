@@ -5,4 +5,5 @@ export class Contato {
     email: string;
     favorito: boolean;
     userId: string;
+    pendenciaFinanceira : boolean;
   }

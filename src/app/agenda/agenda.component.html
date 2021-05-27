@@ -1,0 +1,120 @@
+
+<br><br><br><br>
+
+<button mat-raised-button id="btnNovoEvento"
+        data-toggle="modal"
+        data-target="#exampleModal"
+        (click)="addAgendaClick()"
+        data-backdrop="static"
+        data-dismiss="modal">
+        
+        <mat-icon>add</mat-icon> Novo Evento
+
+</button>
+
+<button mat-raised-button id="btnVoltar" (click)="homeClick()">Voltar</button>
+
+<button id="btnAtualizarEvento" 
+        [hidden]="true" 
+        data-toggle="modal" 
+        data-target="#exampleModal"
+        data-backdrop="static"
+        data-dismiss="modal">Editar Evento</button>
+
+
+<full-calendar [options]="calendarOptions" class="fc"></full-calendar>
+
+<!--Modal-->
+<div class="modal fade" id="exampleModal" *ngIf="ActivateModalForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title" id="exampleModalLabel">{{ModalTitle}}</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeClick()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <div class="modal-body">
+          
+            <div class="row">
+
+                <div class="col-md-12">
+
+                    <form enctype="multipart/form-data"  [formGroup]="agendaForm">
+
+                        <div class="alert alert-danger" *ngIf="errors.length > 0">
+                            <h3 id="msgRetorno">Opa! Alguma coisa não deu certo:</h3>
+                            <ul>
+                                <li *ngFor="let error of errors">{{ error }}</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert alert-success" *ngIf="agendaCadastrada">
+                            <h3 id="msgCadastrandoEvento">Cadastrando Evento</h3>
+                            <mat-progress-bar mode="determinate" value={{progress}}></mat-progress-bar>
+                        </div>
+
+                        <div class="alert alert-success" *ngIf="agendaAtualizada">
+                            <h3 id="msgAtualizandoEvento">Atualizando Evento</h3>
+                            <mat-progress-bar mode="determinate" value={{progress}}></mat-progress-bar>
+                        </div>
+    
+                        <div class="form-group">
+                            <label class="control-label" for="NomeEvento">Nome Evento</label> 
+                            <input type="text" class="form-control" formControlName="nomeEvento" placeholder="Nome do Evento" maxlength="30">
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label" for="DescricaoEvento">Descrição</label>
+                            <input type="text" class="form-control" formControlName="descricaoEvento" placeholder="Descrição do Evento" maxlength="100">
+                        </div>
+                        <div class="form-group">
+                            <!--<mat-form-field>-->
+                                <label class="control-label" for="InicioEvento">Inicio</label>
+                                <input matInput type="datetime-local" class="form-control" formControlName="inicioEvento" placeholder="Inicio">
+                            <!--</mat-form-field>-->
+                        </div>
+                        <div class="form-group">
+                            <!--<mat-form-field>-->
+                                <label class="control-label" for="FimEvento">Fim</label>
+                                <input matInput type="datetime-local" class="form-control" formControlName="fimEvento" placeholder="Fim">
+                            <!--</mat-form-field>-->
+                        </div>
+                        <div class="form-group">
+                           
+                                <!--<mat-label>Contato</mat-label>
+                                <mat-select>
+                                  <mat-option *ngFor="let dataItem of ContatoList" [value]="dataItem.Nome">
+                                    {{dataItem.Nome}}
+                                  </mat-option>
+                                </mat-select>-->
+
+                                <mat-label>Contato</mat-label>
+                                <select class="form-control" formControlName="contatoId">
+                                    <option value="">Selecione um contato</option>
+                                    <option *ngFor="let dataItem of ContatoList" value="{{dataItem.Id}}">{{dataItem.Nome}}</option>
+                                </select>
+                             
+                        </div>
+                        
+                        <div class="modal-footer justify-content-center">
+                            <div class="form-group"  *ngIf="cadastrarAtivo" (click)="addAgenda()">
+                                <input type="submit" value="Cadastrar" class="btn btn-primary" [disabled]="progressBarAtiva">
+                            </div>
+            
+                            <div class="form-group"  *ngIf="editarAtivo" (click)="editAgenda()">
+                                <input type="submit" value="Atualizar" class="btn btn-primary" [disabled]="progressBarAtiva">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<div id="main">
+
+</div>
+

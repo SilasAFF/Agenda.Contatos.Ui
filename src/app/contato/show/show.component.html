@@ -1,17 +1,31 @@
 <br><br><br><br>
 
-  <!--Novo Contato-->
+  <!--Novo Contato 
+    para forçar usuario a fechar modal: data-backdrop="static"
+    para fechar modal: data-dismiss="modal"-->
 <button mat-raised-button id="btnNovoContato"
-        data-toggle="modal" 
+        data-toggle="modal"
         data-target="#exampleModal"
-        (click)="addClick()">
+        (click)="addClick()"
+        data-backdrop="static"
+        data-dismiss="modal">
         
         <mat-icon>add</mat-icon> Novo Contato
 
 </button>
 
+<!--Nova Agenda-->
+<button mat-raised-button id="btnAgendaEventos"
+        data-toggle="modal"
+        data-target="#exampleModal"
+        (click)="addAgendaClick()">
+        
+        Agenda de Eventos
+
+</button>
+
   <!--Modal-->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 2em;">
+  <div class="modal fade" id="exampleModal" *ngIf="ActivateAddEditComp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="margin-top: 2em;">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">

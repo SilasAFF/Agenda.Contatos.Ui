@@ -14,6 +14,9 @@ export class ContatoComponent implements OnInit {
     if(localStorage.getItem('userName') == "null" || localStorage.getItem('userName') == null ){
       this.router.navigate(['/home']);
     }
+
+
+
   }
 
 }

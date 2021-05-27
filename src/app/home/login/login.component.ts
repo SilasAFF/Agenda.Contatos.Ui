@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { AppComponent } from 'src/app/app.component';
 import { Login } from 'src/app/contato/models/Login';
 import { SharedService } from 'src/app/shared.service';
 
@@ -21,7 +22,11 @@ export class LoginComponent implements OnInit {
   errors: any[] = [];
   submitted = false;
 
-  constructor(private fb: FormBuilder,private router: Router,private service:SharedService) { }
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private service:SharedService,
+    private appComp: AppComponent) { }
 
   ngOnInit(): void {
     //Se usuário logado redireciona para tela de Contatos
@@ -52,7 +57,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSaveComplete(response: any) {
-    location.reload();
+    //location.reload();
+    this.appComp.mostraSaudacao();
     this.router.navigate(['contatos']);
   }
 

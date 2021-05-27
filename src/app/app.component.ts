@@ -16,10 +16,12 @@ export class AppComponent implements OnInit {
 
   UserName : String = "";
   
-  constructor(private router: Router) { }
+  constructor(private router: Router) { 
+
+  }
   ngOnInit(): void {
 
-      this.UserName = localStorage.getItem('userName');
+      //this.UserName = localStorage.getItem('userName');
 
       /*if(this.UserName == null){
         localStorage.setItem('userId', null);
@@ -37,11 +39,13 @@ export class AppComponent implements OnInit {
 
   logoutClick(){
     this.limpaDadosUsuario();
-    location.reload();
-    //this.router.navigate(['/home']);
+    this.mostraLogarRegistrar();
+    //location.reload();
+    this.router.navigate(['/home']);
   }
 
   mostraSaudacao() : boolean{
+    this.UserName = localStorage.getItem('userName');
 
     if(this.UserName != null && this.UserName != "null"){
       this.UserName = localStorage.getItem('userName').substring(0,localStorage.getItem('userName').indexOf("@"));
@@ -52,6 +56,8 @@ export class AppComponent implements OnInit {
   }
 
   mostraLogarRegistrar() : boolean{
+    this.UserName = localStorage.getItem('userName');
+
     if(this.UserName != null && this.UserName != "null")
       return false;
     
@@ -74,6 +80,8 @@ export class AppComponent implements OnInit {
     localStorage.setItem('auth', null);
     */
   }
+
+
 }
 
 

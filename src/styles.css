@@ -7,9 +7,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 #corpo{
     background-image: url(../images/Imagem8.png);
     background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  background-size: 1366px 667px
+  /* background-attachment: fixed; */
+  /* background-position: center; */
+  /* background-size: 1366px 667px */
+    background-size: cover;
+    background-color: rgb(251, 223, 160);
 }
 
 
@@ -24,5 +26,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     padding: 2em 0em 1em;
     border-top: solid 2px #ffffff;
   }
+
+  footer {
+    clear: both;
+    position: relative;
+    height: 150px;
+}
 
  

@@ -48,7 +48,12 @@
                     </div>
     
                     <div class="form-group col-md-3">
-                        <label class="control-label" for="Cep">Cep</label>
+                        <label class="control-label" for="Cep">CEP
+                            <!--<span style="display: inline;float: right;margin-left: 40px;"> Não sei-->
+                            <span style="margin-left: 1em;"> | Não sei
+                                <input type="checkbox" style="margin-left:2px;" (click)="checkNaoSeiCep()">
+                            </span>
+                        </label>
                         <input type="text" class="form-control" formControlName="cep" placeholder="_____-___" mask="00000-000">
                     </div>
                 </div>
@@ -68,7 +73,7 @@
                         <input type="text" class="form-control" formControlName="estado" placeholder="Estado">
                     </div>
                 </div>
-    
+                <div class="modal-footer justify-content-center">
                     <div class="form-group"  *ngIf="dataSource.length == 0" (click)="addEndereco()">
                         <input type="submit" value="Cadastrar" class="btn btn-primary">
                     </div>
@@ -76,7 +81,7 @@
                     <div class="form-group"  *ngIf="dataSource.length > 0" (click)="editEndereco()">
                         <input type="submit" value="Atualizar" class="btn btn-primary">
                     </div>
-    
+                </div>
             </form>
           
         </div>

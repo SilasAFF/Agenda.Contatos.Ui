@@ -23,6 +23,16 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { HomeComponent } from './home/home.component';
 import { RegistrarComponent } from './home/registrar/registrar.component';
 import { LoginComponent } from './home/login/login.component';
+import { AgendaComponent } from './agenda/agenda.component';
+import { FullCalendarModule } from '@fullcalendar/angular'; 
+import  dayGridPlugin  from "@fullcalendar/daygrid";
+import  interactionPlugin  from "@fullcalendar/interaction";
+
+
+FullCalendarModule.registerPlugins([
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -33,7 +43,8 @@ import { LoginComponent } from './home/login/login.component';
     DetailComponent,
     HomeComponent,
     RegistrarComponent,
-    LoginComponent
+    LoginComponent,
+    AgendaComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +62,8 @@ import { LoginComponent } from './home/login/login.component';
     MatProgressBarModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    FullCalendarModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

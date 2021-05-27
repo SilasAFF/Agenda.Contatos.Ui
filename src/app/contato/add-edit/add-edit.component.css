@@ -12,3 +12,23 @@ input[type=number] {
 }
 
 input[type='checkbox'] { margin-left: 10px; }
+
+#msgCadastrandoContato{
+    font-weight: 500;
+}
+
+#msgAtualizandoContato{
+    font-weight: 500;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+    background-color: rgb(22, 214, 138);
+}
+
+::ng-deep .mat-progress-bar-buffer {
+    background: #ffffff;
+}
+
+::ng-deep .mat-progress-bar {
+    border-radius: 2px;
+}
