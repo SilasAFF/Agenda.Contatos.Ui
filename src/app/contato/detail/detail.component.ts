@@ -8,7 +8,7 @@ import { SharedService } from 'src/app/shared.service';
 import { Endereco } from '../models/Endereco';
 import { DomSanitizer } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
-
+import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 @Component({
   selector: 'app-detail',
@@ -183,15 +183,53 @@ export class DetailComponent implements OnInit {
   //deletando endereco
   deleteClick(){
 
-      let enderecoForm = Object.assign({}, this.endereco, this.enderecoForm.value);
+    let enderecoForm = Object.assign({}, this.endereco, this.enderecoForm.value);
 
-      if(confirm("Tem certeza que deseja excluir o endereco?")){
-        this.delEnderecoHandle(enderecoForm.id)
-          .subscribe(
-            result => { this.onSaveComplete(result) },
-            fail => { this.onError(fail) }
-        );
-      }
+    Swal.fire({
+      title:'<span style="font-weight:bold">'+"Tem certeza?"+'</span>',
+      html: 'Você realmente quer excluir o endereco?',
+      icon: 'warning',
+      showCloseButton: true,
+      showCancelButton: true,
+      confirmButtonText:'Sim',
+      cancelButtonText: 'Não'
+    }).then((result) => {
+        if (result.value) {
+
+            this.delEnderecoHandle(enderecoForm.id)
+            .subscribe(
+              result => { setTimeout(() => {this.onSaveComplete(result)}, 1000); },
+              fail => { this.onError(fail) }
+            );
+            Swal.fire(
+              'Endereço Excluido',
+              'Endereço excluido com sucesso',
+              'success'
+            )
+            
+
+        }
+        else if (result.dismiss === Swal.DismissReason.cancel) {
+
+            Swal.fire(
+              'Cancelado',
+              'Exclusão cancelada',
+              'info'
+            )
+
+        }
+      })
+
+
+      //let enderecoForm = Object.assign({}, this.endereco, this.enderecoForm.value);
+
+      //if(confirm("Tem certeza que deseja excluir o endereco?")){
+        // this.delEnderecoHandle(enderecoForm.id)
+        //   .subscribe(
+        //     result => { this.onSaveComplete(result) },
+        //     fail => { this.onError(fail) }
+        // );
+      //}
   }
 
   //deletando endereco
@@ -248,7 +286,6 @@ export class DetailComponent implements OnInit {
   onSaveComplete(response: any) {
       this.load()
       // this.closeDialog();
-      // this.refreshList();
       
   }
 

@@ -27,6 +27,8 @@ import { AgendaComponent } from './agenda/agenda.component';
 import { FullCalendarModule } from '@fullcalendar/angular'; 
 import  dayGridPlugin  from "@fullcalendar/daygrid";
 import  interactionPlugin  from "@fullcalendar/interaction";
+import { PendanciaFinanceiraComponent } from './pendancia-financeira/pendancia-financeira.component';
+import { CurrencyMaskModule } from "ng2-currency-mask";
 
 
 FullCalendarModule.registerPlugins([
@@ -44,7 +46,8 @@ FullCalendarModule.registerPlugins([
     HomeComponent,
     RegistrarComponent,
     LoginComponent,
-    AgendaComponent
+    AgendaComponent,
+    PendanciaFinanceiraComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +66,8 @@ FullCalendarModule.registerPlugins([
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatTooltipModule,
-    FullCalendarModule
+    FullCalendarModule,
+    CurrencyMaskModule
   ],
   providers: [SharedService],
   bootstrap: [AppComponent]

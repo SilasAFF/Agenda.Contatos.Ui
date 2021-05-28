@@ -6,4 +6,5 @@ export class Contato {
     favorito: boolean;
     userId: string;
     pendenciaFinanceira : boolean;
+    valorPendente: string;
   }

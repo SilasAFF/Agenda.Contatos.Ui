@@ -233,6 +233,18 @@ public serviceError(response: Response | any) {
       return this.http.delete(this.APIUrl+'/agenda/'+id, { headers: reqHeader }/*this.ObterHeaderJson()*/);
     }
 
+  //PENDENCIA-FINANCEIRA: ------------------------------------------------------------
+  getContatoPendenciaFinanceiraList():Observable<Contato[]>{
+    var auth = localStorage.getItem('auth');
+    var userId = localStorage.getItem('userId');
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + auth
+   });
+
+    return this.http.get<any>(this.APIUrl+'/pendencia-financeira/'+userId.toString(), { headers: reqHeader });
+  }
+
   //REGISTRAR: ------------------------------------------------------------------------
 
   addUser(registrar: Registrar): Observable<Registrar>{

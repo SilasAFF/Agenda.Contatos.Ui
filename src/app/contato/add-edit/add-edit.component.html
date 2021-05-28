@@ -39,12 +39,18 @@
 
             <div class="form-group">
                 <label class="control-label" for="favorito">Favorito</label>
-                    <input type="checkbox"  formControlName="favorito">
+                <input type="checkbox"  formControlName="favorito">
             </div>
 
             <div class="form-group">
                 <label class="control-label" for="pendenciaFinanceira">Possui pendência financeira</label>
-                    <input type="checkbox"  formControlName="pendenciaFinanceira">
+                <input type="checkbox"  formControlName="pendenciaFinanceira" (change)="setContatoPendente()">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" for="valorPendente">Valor pendente</label>
+                <!--<input type="text" class="form-control" formControlName="valorPendente" placeholder="R$" [value]="ValorPendente">-->
+                <input class="form-control" formControlName="valorPendente" placeholder="R$"  currencyMask [(ngModel)]="ValorPendente" [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
             </div>
 
             <div class="modal-footer justify-content-center">

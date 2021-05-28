@@ -83,7 +83,8 @@ export class ShowComponent implements OnInit {
       email:'',
       favorito: false,
       userId: null,
-      pendenciaFinanceira: false
+      pendenciaFinanceira: false,
+      valorPendente:null
       /*
       endereco:{
           id: null, 
@@ -111,7 +112,8 @@ export class ShowComponent implements OnInit {
       email: item.Email,
       favorito: item.Favorito,
       userId: item.UserId,
-      pendenciaFinanceira: item.PendenciaFinanceira
+      pendenciaFinanceira: item.PendenciaFinanceira,
+      valorPendente: item.ValorPendente
     /*
       endereco:{
         id: item.Id,
@@ -259,8 +261,13 @@ export class ShowComponent implements OnInit {
     this.snackBar.open("Email Copiado", val, config);
   }
 
-  addAgendaClick(){
+  agendaClick(){
     this.router.navigate(['agenda']);
   }
+
+  pendenciaFinanceiraClick(){
+    this.router.navigate(['pendencia-financeira']);
+  }
+
 
 }

@@ -23,13 +23,16 @@ export class AddEditComponent implements OnInit {
   Email:string;
   Favorito:boolean;
   UserId:String = localStorage.getItem('user');
-  PendenciaFinanceira:boolean;
+  PendenciaFinanceira: boolean;
+  ValorPendente:string;
   contatoForm: FormGroup;
   errors: any[] = [];
   contatoCadastrado: boolean = false;
   contatoAtualizado: boolean = false;
   progress:number = 0;
   progressBarAtiva: boolean = false;
+  adicionarContato: boolean;
+  editarContato:boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -50,8 +53,12 @@ export class AddEditComponent implements OnInit {
         email: this.contato.email,
         favorito: this.contato.favorito,
         userId: this.UserId,
-        pendenciaFinanceira: this.contato.pendenciaFinanceira
+        pendenciaFinanceira: this.contato.pendenciaFinanceira,
+        valorPendente: this.contato.valorPendente
       });
+
+      this.contatoForm.controls['valorPendente'].disable();
+      this.adicionarContato = true;
     }
 
     // Para Atualizar
@@ -63,13 +70,19 @@ export class AddEditComponent implements OnInit {
         email: this.contato.email,
         favorito: this.contato.favorito,
         userId: this.contato.userId,
-        pendenciaFinanceira: this.contato.pendenciaFinanceira
+        pendenciaFinanceira: this.contato.pendenciaFinanceira,
+        valorPendente: this.contato.valorPendente
       });
+
+      this.ValorPendente = this.contato.valorPendente;
+      this.editarContato = true;
     }
+
   }
 
   addContato(){
     let contatoForm = Object.assign({}, this.contato, this.contatoForm.value);
+    contatoForm.valorPendente = contatoForm.valorPendente + "";
     
     this.addContatoHandle(contatoForm)
         .subscribe(
@@ -99,6 +112,8 @@ export class AddEditComponent implements OnInit {
         this.contatoForm.controls['email'].enable();
         this.contatoForm.controls['favorito'].enable();
         this.contatoForm.controls['pendenciaFinanceira'].enable();
+        this.contatoForm.controls['valorPendente'].disable();
+
         
         //Reset form
         this.contatoForm = this.fb.group({
@@ -108,7 +123,8 @@ export class AddEditComponent implements OnInit {
           email: '',
           favorito: false,
           userId: this.UserId,
-          pendenciaFinanceira: false
+          pendenciaFinanceira: false,
+          valorPendente: ''
         });
 
         this.contatoCadastrado = false;
@@ -120,6 +136,9 @@ export class AddEditComponent implements OnInit {
 
   editContato(){
     let contatoForm = Object.assign({}, this.contato, this.contatoForm.value);
+    if(!contatoForm.pendenciaFinanceira){
+      contatoForm.valorPendente = null;
+    }
     
     this.editContatoHandle(contatoForm)
         .subscribe(
@@ -148,6 +167,8 @@ export class AddEditComponent implements OnInit {
         this.contatoForm.controls['email'].enable();
         this.contatoForm.controls['favorito'].enable();
         this.contatoForm.controls['pendenciaFinanceira'].enable();
+        this.contatoForm.controls['valorPendente'].enable();
+
 
 
         //Preenche form com os dados recém editados
@@ -159,7 +180,8 @@ export class AddEditComponent implements OnInit {
           email: contatoFormAtualizado.email,
           favorito: contatoFormAtualizado.favorito,
           userId: contatoFormAtualizado.userId,
-          pendenciaFinanceira: contatoFormAtualizado.pendenciaFinanceira
+          pendenciaFinanceira: contatoFormAtualizado.pendenciaFinanceira,
+          valorPendente: contatoFormAtualizado.valorPendente
         });
         this.contatoAtualizado = false;
         this.progress = 0;//Zerando barra de progresso novamente
@@ -183,6 +205,8 @@ export class AddEditComponent implements OnInit {
       this.contatoForm.controls['email'].disable();
       this.contatoForm.controls['favorito'].disable();
       this.contatoForm.controls['pendenciaFinanceira'].disable();
+      this.contatoForm.controls['valorPendente'].disable();
+
     }
   }
 
@@ -197,6 +221,33 @@ export class AddEditComponent implements OnInit {
       this.errors = fail.error.errors;
     }
    
+  }
+
+  setContatoPendente(){
+    if(this.adicionarContato){
+      this.contato.pendenciaFinanceira = this.PendenciaFinanceira;
+      this.PendenciaFinanceira = !this.contato.pendenciaFinanceira;
+      if(this.PendenciaFinanceira){
+        this.contatoForm.controls['valorPendente'].enable();
+      }
+      else{
+        this.contatoForm.controls['valorPendente'].disable();
+        this.contatoForm.controls['valorPendente'].setValue(null);
+      }
+    }
+    else{
+      this.contato.pendenciaFinanceira = !this.contato.pendenciaFinanceira;
+      this.PendenciaFinanceira = this.contato.pendenciaFinanceira;
+      if(this.PendenciaFinanceira){
+        this.contatoForm.controls['valorPendente'].enable();
+      }
+      else{
+        this.contatoForm.controls['valorPendente'].disable();
+        this.contatoForm.controls['valorPendente'].setValue(null);
+      }
+    }
+    
+
   }
 
 }
